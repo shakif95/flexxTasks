@@ -1,3 +1,9 @@
+const BASE_URL = "https://flexxter.de/Tasks";
+const GETAPI = `${BASE_URL}/get`;
+const POSTAPI = `${BASE_URL}/save`;
+
+
+// some test data in case of no valid server endpoint
 const todos = [
   {
     id: 1,
@@ -37,7 +43,47 @@ const todos = [
   }
 ]
 
+/**
+ * get todos from API
+ * @author Shakif Malek <shakif.malek@gmail.com>
+ * @returns {Promise} todos
+ */
+async function getTodos(projectId) {
+  // TODO: uncommented it if there is a valid server enpoint
+  // const URL = projectId ? `${GETAPI}/${projectId}` : GETAPI;
+  // const response = await fetch(URL, {
+  //   mode: "no-cors"
+  // });
+  // return await response.json();
 
-function getTodos() {
-  return todos;
+  // TODO: remove it if there is a valid server enpoint
+  return new Promise((resolve) => resolve(todos));
+}
+
+/**
+ * save changed state of a todo item
+ * @author Shakif Malek <shakif.malek@gmail.com>
+ * @returns {Promise} updatedTodo
+ */
+function saveTodo(todo) {
+  // TODO: uncommented it if there is a valid server enpoint
+  // const response = await fetch(POSTAPI, {
+  //   mode: "no-cors",
+  //   method: "POST",
+  //   body: todo
+  // });
+  // return await response.json();
+  
+  // TODO: remove the rest of the lines from here if there is a valid server enpoint
+  todos = todos.map(item => {
+    if(item.id === todo.id){
+      return {
+        ...item,
+        title: todo.title,
+        description: todo.description,
+        checked: todo.checked,
+      }
+    }
+  });
+  return new Promise((resolve) => resolve(todo));;
 }

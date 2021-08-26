@@ -1,3 +1,7 @@
+/**
+   * Template for the custom element
+   * @author Shakif Malek <shakif.malek@gmail.com>
+   */
 const template = document.createElement('template');
 template.innerHTML = `
   <style>
@@ -39,6 +43,10 @@ template.innerHTML = `
   </div>
 `;
 
+/**
+   * Class for the custom element todo-item extends HTMLElement
+   * @author Shakif Malek <shakif.malek@gmail.com>
+   */
 class TodoItem extends HTMLElement {
 
   static get observedAttributes() {
@@ -67,6 +75,12 @@ class TodoItem extends HTMLElement {
     }
   }
 
+  /**
+   * Listen checked attributed changed event
+   * @param {boolean} checked 
+   * @author Shakif Malek <shakif.malek@gmail.com>
+   * @returns {void} Nothing
+   */
   attributeChangedCallback(checked) {
     if(checked === "checked") {
       const currentValue = this.shadowRoot.querySelector("input").checked;
@@ -83,8 +97,13 @@ class TodoItem extends HTMLElement {
     }
   }
 
+
+  /**
+   * toggle todo item checked status 
+   * @author Shakif Malek <shakif.malek@gmail.com>
+   * @returns {void} Nothing
+   */
   toggle(){
-    //if(checked === "checked") {
       const currentValue = this.shadowRoot.querySelector("input").checked;
       if (!currentValue) {
         this.shadowRoot.querySelector("input").setAttribute("checked", "checked");
@@ -96,12 +115,13 @@ class TodoItem extends HTMLElement {
         this.shadowRoot.querySelector("h2").style.textDecoration = "none";
         this.shadowRoot.querySelector("p").style.textDecoration = "none";
       }
-    //}
   }
 
   /**
    * sets todoitem properties
    * @param {Object} todoItem 
+   * @author Shakif Malek <shakif.malek@gmail.com>
+   * @returns {void} Nothing
    */
   setTodoItem(todoItem) {
     this.shadowRoot.querySelector("h2").innerText = todoItem.title;
@@ -110,10 +130,16 @@ class TodoItem extends HTMLElement {
   }
 }
 
-function onClick(event) {
-  const id = event?.currentTarget?.id;
+/**
+   * onClick event - gets called when a todo item is clicked and change checked status and call save API
+   * @param {Object} event 
+   * @author Shakif Malek <shakif.malek@gmail.com>
+   */
+async function onClick(event) {
+  const { id } = event?.currentTarget?.value;
   if(id) {
     document.getElementById(id).toggle();
+    await saveTodo(event?.currentTarget?.value);
   }
 }
 
