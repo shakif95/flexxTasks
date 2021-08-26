@@ -3,9 +3,9 @@
  * @author Shakif Malek <shakif.malek@gmail.com>
  * @returns {Promise} Nothing
  */
-function shiftTodos() {
+function reloadTodos() {
   return new Promise((resolve) => {
-    const todos = getTodos();
+    const todos = getTodosFromDom();
     const bodyTodos = [...todos]; // keeping a clone for the todo list as they are needed to be add again in the DOM body
     removeTodos(todos);
     addTodosToBody(bodyTodos);
@@ -18,7 +18,7 @@ function shiftTodos() {
  * @author Shakif Malek <shakif.malek@gmail.com>
  * @returns {HTMLCollectionOf<Element>} todos
  */
-function getTodos() {
+function getTodosFromDom() {
   return document.getElementsByTagName('TODO-ITEM');
 }
 
@@ -39,7 +39,15 @@ function removeTodos(todos) {
  * @param {HTMLCollectionOf<Element>} todos
  */
 function addTodosToBody(todos) {
-  todos.forEach(item => document.body.appendChild(item));
+  const todoData = getTodos();
+  todoData.forEach(item => {
+    const element = document.createElement("todo-item");
+    element.id = item.id;
+    element.addEventListener("click", onClick, false);
+    item.checked && element.setAttribute("checked", "checked");
+    element.setTodoItem(item);
+    document.body.appendChild(element);
+  });;
 }
 
 /**
@@ -48,5 +56,5 @@ function addTodosToBody(todos) {
  * @returns {void} Nothing
  */
 window.addEventListener('load', function () {
-  shiftTodos();
+  reloadTodos();
 });
