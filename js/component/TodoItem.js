@@ -38,7 +38,7 @@ template.innerHTML = `
     <div class="card-content">
       <h2 class="custom-header"></h2>
       <input class="custom-checkbox" type="checkbox"/>
-      <p>Architect & Engineer</p>
+      <p></p>
     </div>
   </div>
 `;
